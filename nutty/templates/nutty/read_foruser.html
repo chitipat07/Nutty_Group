@@ -1,0 +1,38 @@
+{% extends 'nutty/base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-4 gap-4 justify-between mt-20 ml-20 mr-20">
+    {% for i in data %}
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <a href="">
+            <img class="rounded-t-lg h-48 w-full object-cover" src="{{i.image.url}}" alt="" />
+        </a>
+        <div class="p-5">
+            <a href="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{i.name}}</h5>
+            </a>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ i.price }} บาท</p>
+
+
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" class="w-12 h-12"
+                    style="margin-left: auto;">
+                    <path fill-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+
+
+</div>
+
+<a href="#">
+    <div class="fixed bottom-0 w-full bg-gray-300 text-white py-2 px-4">
+        <button class="w-full bg-green-500 text-white py-2 px-4 rounded">รายการอาหารที่เลือกไว้ รายการ
+        </button>
+    </div>
+</a>
+{% endblock %}

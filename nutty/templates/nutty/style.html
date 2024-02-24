@@ -1,0 +1,29 @@
+<style>
+    @media screen and (max-width: 640px) {
+
+        /* Adjust styling for small screens here */
+        .grid-cols-4 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .mt-20 {
+            margin-top: 10px;
+        }
+
+        .ml-20 {
+            margin-left: 10px;
+        }
+
+        .mr-20 {
+            margin-right: 10px;
+        }
+    }
+    
+    @layer utilities {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+</style>

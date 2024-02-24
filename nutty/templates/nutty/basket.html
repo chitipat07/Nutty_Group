@@ -1,0 +1,117 @@
+{% extends 'nutty/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+        <h1 class="text-2xl font-bold my-4 text-gray-600">รายการอาหาร</h1>
+        <a href="#"><button
+                class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                เพิ่มเมนู
+            </button></a>
+    </div>
+    {%for s in data%}
+    <div class="mt-8">
+        <div class="flex flex-col md:flex-row border-b border-gray-400 py-4">
+            <div class="flex-shrink-0">
+
+                <img class="w-32 h-32 object-cover" src="{{ s.menu.image.url }}" alt="" />
+
+            </div>
+            <div class="mt-4 md:mt-0 md:ml-6">
+                <h2 class="text-lg text-gray-600 font-bold">{{s.menu.name}}</h2>
+                <p class="mt-2 text-gray-600">{{s.menu.price}}</p>
+                <div class="mt-4 flex items-center">
+                   
+                </div>
+            </div>
+            </div>
+        </div>
+        <a href="#" class="text-black">
+            <i class="fa-solid fa-trash-can text-red-700 text-2xl text-end"></i>
+        </a>
+    </div>
+    {%endfor%}
+
+    <div class="text-center text-black">
+    <form action="#" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="seat">โต๊ะ</label>
+        <input name="seat" type="number" class="mb-2"><br>
+        <label for="more">อื่นๆ</label>
+        <textarea name="more" id="" rows="3" ></textarea><br>
+        <button type="submit" class="rounded-md bg-blue-500 text-white px-3 py-1 hover:bg-blue-700">สั่งซื้อ</button>
+    </form>
+    </div>
+
+    <div class="flex justify-end items-center mt-8">
+        <span class="text-gray-600 mr-4">Subtotal:</span>
+        <span class="text-xl text-gray-600 font-bold">$</span>
+    </div>
+
+
+</div> -->
+<div class="h-screen bg-gray-100 pt-20">
+    <h1 class="mb-10 text-center text-2xl font-bold text-gray-600">รายการอาหารที่เลือกไว้</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-between mt-20 ml-20 mr-20">
+        {% for s in data %}
+        <div class="rounded-lg md:w-full">
+            <div class="justify-between mb-6 rounded-lg bg-gray-100 p-6 shadow-md sm:flex sm:justify-start text-black">
+                <img src="{{ s.menu.image.url }}" alt="product-image"
+                    class="w-32 h-32 object-cover rounded-lg sm:w-40" />
+                <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                    <div class="mt-5 sm:mt-0">
+                        <h2 class="text-lg font-bold">{{s.menu.name}}</h2>
+                    </div>
+                    <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                        <div class="flex items-center border-gray-300">
+                            <span
+                                class="cursor-pointer rounded-l bg-gray-300 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
+                                - </span>
+                            <input
+                                class="h-8 w-8 border bg-blue-300 text-gray-400 text-black text-center text-xs outline-none"
+                                type="number" value="2" min="1" />
+                            <span
+                                class="cursor-pointer rounded-r bg-gray-300 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
+                                + </span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <p class="text-sm">{{ s.menu.price }}-. บาท</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-span-4 mb-10 flex justify-center">
+        <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+            <div class="mb-2 flex justify-between">
+                <p class="text-gray-700">Subtotal</p>
+                <p class="text-gray-700">$129.99</p>
+            </div>
+            <div class="flex justify-between">
+                <p class="text-gray-700">Shipping</p>
+                <p class="text-gray-700">$4.99</p>
+            </div>
+            <hr class="my-4" />
+            <div class="flex justify-between">
+                <p class="text-lg font-bold">Total</p>
+                <div class="">
+                    <p class="mb-1 text-lg font-bold">$134.98 USD</p>
+                    <p class="text-sm text-gray-700">including VAT</p>
+                </div>
+            </div>
+            <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check
+                out</button>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
