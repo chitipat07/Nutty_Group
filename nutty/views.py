@@ -1,37 +1,104 @@
 from django.shortcuts import render,redirect
 from django.db.models import F
 from .models import *
+from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
+def is_active_and_not_superuser(user):
+    return user.is_active and not user.is_superuser
+
+def is_manager(user):
+    return user.is_superuser and user.is_staff
 # Create your views here.
 def index(req):
-    item = Menu.objects.all()
+    return render(req,'nutty/index.html')
+
+def register_user(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('logins_user') 
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'nutty/register.html', {'form': form})
+
+
+def logins_user(req):
+    form = Loginforms()
+    if req.method == 'POST':
+        form = Loginforms(req.POST)
+        if form.is_valid:
+            username = req.POST.get('username')
+            password = req.POST.get('password')
+            users = authenticate(username=username,password=password)
+            if users:
+                login(req,users)
+                return redirect('read_for_user')
+        else:
+            form = Loginforms()
+    return render(req, 'nutty/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+########################################################################################
+# for user
+@login_required(login_url='logout_view')
+@user_passes_test(is_active_and_not_superuser, login_url='/read_for_admin')
+def read_for_user(req):
+    data = Menu.objects.all()
     context = {
-        'data':item
+        'data':data
     }
     return render(req,'nutty/read_foruser.html',context)
 
+########################################################################################
+# for admin
+@login_required(login_url='logout_view')
+@user_passes_test(is_manager, login_url='logout_view')
+def read_for_admin(req):
+    data = Menu.objects.all()
+    context = {
+        'data':data
+    }
+    return render(req,'nutty/read_foradmin.html',context)
 
-# def create_Basket(req,id):
-#     fs = BeamChi.objects.get(pk=id)
+def create_menu(req):
+    form = MenuForm()
+    if req.method == 'POST':
+        form = MenuForm(req.POST,req.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('read_for_admin')
+        else:
+            form = MenuForm()
+    return render(req,'nutty/create.html',{'form':form})
 
-#     existing_basket = Basket.objects.filter(user=req.user, menu_item=fs).first()
+def update_menu(req,id):
+    data = Menu.objects.get(pk=id)
+    form = MenuForm(instance=data)
+    if req.method == 'POST':
+        form = MenuForm(req.POST,req.FILES,instance=data)
+        if form.is_valid():
+            form.save()
+            return redirect('read_for_admin')
+        else:
+            form = MenuForm(instance=data)
+    return render(req,'nutty/update.html',{'form':form,'data':data})
 
-#     if existing_basket:
- 
-#         existing_basket.q += 1
-#         existing_basket.save()
-#     else:
+def delete(req,id):
+    data = Menu.objects.get(pk=id)
+    data.delete()
+    return redirect('read_for_admin')
 
-#         B = Basket.objects.create(user=req.user, menu_item=fs, total_price=fs.g)
-#         B.save()
-#     return redirect('read_basket')
-
-
-
+########################################################################################
+# add basket
 def read_Basket(req):
     if req.user.is_authenticated:
         basket, created = Basket.objects.get_or_create(user=req.user)
@@ -87,19 +154,6 @@ def confirm(req):
         more = str(more) if more else None
 
         basket = Basket.objects.filter(user=req.user).first()
-
-        # menu_items = [item.menu.name for item in basket.get_basket_items_list.all()]
-        # menu_items_str = ', '.join(menu_items)
-
-        # order = Order.objects.create(
-        #     user=req.user,
-        #     basket=basket,
-        #     menu_item=menu_items_str,
-        #     total_price=basket.get_basket_total,
-        #     quantity=basket.get_basket_items,
-        #     table_number=seat,
-        #     note=more
-        # )
 
         # Create Order for each item in the basket
         for item in basket.get_basket_items_list.all():
