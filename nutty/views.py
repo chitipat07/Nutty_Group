@@ -169,4 +169,7 @@ def confirm(req):
 
         return redirect('index')
 
-
+def Delete_item(req,id):
+    data = BasketItem.objects.get(pk=id)
+    data.delete()
+    return redirect('read_Basket')

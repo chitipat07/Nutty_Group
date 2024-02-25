@@ -1,7 +1,7 @@
 {% extends 'nutty/base.html' %}
 
 {% block content %}
-<div class="grid grid-cols-4 gap-4 justify-between mt-20 ml-20 mr-20">
+<div class="grid grid-cols-4 gap-4 justify-between mt-20 ml-20 mr-20 mb-20">
     {% for i in data %}
     <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <a href="">
@@ -34,9 +34,9 @@
 
 </div>
 
-<a href="#">
+<a href="{% url 'read_Basket' %}">
     <div class="fixed bottom-0 w-full bg-gray-300 text-white py-2 px-4">
-        <button class="w-full bg-green-500 text-white py-2 px-4 rounded">รายการอาหารที่เลือกไว้ รายการ
+        <button class="w-full bg-green-500 text-white py-2 px-4 rounded">กลับไปที่ตระกร้า
         </button>
     </div>
 </a>
