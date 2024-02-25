@@ -67,15 +67,20 @@
                     </div>
                     <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                         <div class="flex items-center border-gray-300">
-                            <span
-                                class="cursor-pointer rounded-l bg-gray-300 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                                - </span>
+                            <a href="{% url 'nega' s.id %}">
+                                <span
+                                    class="cursor-pointer rounded-l bg-gray-300 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
+                                    - </span>
+                            </a>
                             <input
                                 class="h-8 w-8 border bg-blue-300 text-gray-400 text-black text-center text-xs outline-none"
                                 type="number" value="{{s.quantity}}" min="1" />
-                            <span
-                                class="cursor-pointer rounded-r bg-gray-300 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                                + </span>
+                            <a href="{% url 'poss' s.id %}">
+                                <span
+                                    class="cursor-pointer rounded-r bg-gray-300 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
+                                    + </span>
+                            </a>
+
                         </div>
                         <div class="flex items-center space-x-4">
                             <p class="text-sm">{{ s.get_total }}-. บาท</p>
@@ -92,7 +97,7 @@
     </div>
 
     <div class="col-span-4 mb-10 flex justify-center">
-        <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+        <div class="mt-6 h-full rounded-lg border bg-gray-300 p-6 shadow-md md:mt-0 md:w-1/3">
             <div class="mb-2 flex justify-between">
                 <p class="text-gray-700">Items</p>
                 <p class="text-gray-700">{{ basket.get_basket_items }}</p>
@@ -108,8 +113,20 @@
                     <p class="mb-1 text-gray-700 font-bold">{{ basket.get_basket_total }}</p>
                 </div>
             </div>
-            <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check
-                out</button>
+            <div class="text-center text-black">
+                <form action="{% url 'confirm' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="seat">โต๊ะ</label>
+                    <input name="seat" type="number" class="mb-2"><br>
+                    <p class="text-red-500">*** ลูกค้าสั่งใส่กล่องกรุณาแจ้งในช่องอื่นๆ ***</p>
+                    <label for="more">อื่นๆ</label>
+                    <textarea name="more" id="" rows="3"></textarea><br>
+                    <button type="submit"
+                        class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check
+                        out</button>
+                </form>
+            </div>
+
         </div>
     </div>
 

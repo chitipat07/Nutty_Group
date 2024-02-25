@@ -30,6 +30,11 @@ class Basket(models.Model):
         basketitems = self.basketitem_set.all()
         total = sum([item.quantity for item in basketitems])
         return total
+    
+    @property
+    def get_basket_items_list(self):
+        basketitems = self.basketitem_set.all()
+        return basketitems
 
 
 class BasketItem(models.Model):
@@ -45,10 +50,17 @@ class BasketItem(models.Model):
 class Order(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    menu_item = models.CharField(max_length=250, blank=True, null=True)
     total_price = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=0)
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.basket} {self.user} {self.total_price} {self.created_at} {self.table_number} {self.note}'
+
+    # @property
+    # def get_basket_items(self):
+    #     basketitems = self.basket.basketitem_set.all()
+    #     return basketitems

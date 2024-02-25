@@ -12,7 +12,7 @@ class BasketItemAdmin(admin.ModelAdmin):
     list_display = ('menu', 'basket', 'quantity')
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('basket', 'user', 'total_price', 'created_at', 'table_number', 'note')
+    list_display = ('basket', 'user','menu_item','total_price','quantity', 'created_at', 'table_number', 'note')
 
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(Basket, BasketAdmin)
