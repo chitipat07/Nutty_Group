@@ -37,7 +37,20 @@ def read_Basket(req):
         item = basket.basketitem_set.all()
     else:
         item = []
+        basket = {'get_basket_total':0,'get_basket_items':0}
     context = {
-        'data':item
+        'data':item,
+        'basket':basket
     }
     return render(req,'nutty/basket.html', context)
+
+
+
+# def create_Basket(req,id):
+#     menu = Menu.objects.get(pk=id)
+#     user = req.user
+#     basket,_ = Basket.objects.get_or_create(user=user)
+
+#     basket_item = BasketItem.objects.create(basket=basket,menu=menu)
+
+#     return redirect('read_Basket')

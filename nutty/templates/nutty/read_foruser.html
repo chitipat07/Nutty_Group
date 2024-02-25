@@ -13,15 +13,19 @@
             </a>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ i.price }} บาท</p>
 
+            <div class="flex justify-end items-end">
+                <button data-menu={{menu.id}} data-action="add" class="update-basket">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" class="w-12 h-12"
+                        style="margin-left: auto;">
+                        <path fill-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
 
-            <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" class="w-12 h-12"
-                    style="margin-left: auto;">
-                    <path fill-rule="evenodd"
-                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
+
+
         </div>
     </div>
     {% endfor %}

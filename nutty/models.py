@@ -19,14 +19,28 @@ class Basket(models.Model):
     def __str__(self):
         return f'{self.user} {self.total_price} {self.created_at}'
 
+    @property
+    def get_basket_total(self):
+        basketitems = self.basketitem_set.all()
+        total = sum([item.get_total for item in basketitems])
+        return total
+    
+    @property
+    def get_basket_items(self):
+        basketitems = self.basketitem_set.all()
+        total = sum([item.quantity for item in basketitems])
+        return total
+
 
 class BasketItem(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
 
-    def __str__(self):
-        return f'{self.menu} {self.basket} {self.quantity}'
+    @property
+    def get_total(self):
+        total = self.menu.price * self.quantity
+        return total
 
 class Order(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
