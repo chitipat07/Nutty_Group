@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from django.db.models import F
+import requests
+from django.utils import timezone
 from .models import *
 from .forms import *
 from django.contrib.auth.forms import UserCreationForm
@@ -143,6 +145,7 @@ def nega(req, id):
     return redirect('read_Basket')
 
 
+
 def confirm(req):
     if req.method == 'POST':
         seat = req.POST.get('seat')
@@ -157,7 +160,7 @@ def confirm(req):
 
         # Create Order for each item in the basket
         for item in basket.get_basket_items_list.all():
-            Order.objects.create(
+            order = Order.objects.create(
                 user=req.user,
                 basket=basket,
                 menu_item=item.menu.name,
@@ -167,9 +170,29 @@ def confirm(req):
                 note=more
             )
 
-        return redirect('index')
+            # Send notification to Line Notify for each order
+            line_notify_token = 'jZQ0iFamFl0VQdMR183IU4bQ4gI9gyzeyq2bO5grNf3'
+            line_notify_api = 'https://notify-api.line.me/api/notify'
+            headers = {'Authorization': f'Bearer {line_notify_token}'}
+            message = f'Your order has been confirmed!\n\nUser: {req.user}\nBasket: {basket}\nMenu Item: {order.menu_item}\nTotal Price: {order.total_price}\nQuantity: {order.quantity}\nTable Number: {order.table_number}\nNote: {order.note}'
+            payload = {'message': message}
+            requests.post(line_notify_api, headers=headers, data=payload)
+
+        return redirect('read_for_user')
+
+
+
 
 def Delete_item(req,id):
     data = BasketItem.objects.get(pk=id)
     data.delete()
     return redirect('read_Basket')
+
+# from django.http import HttpResponse
+
+# def show_order(request):
+#     order = Order.objects.filter(user=6)
+#     list = []
+#     for i in order:
+#         list.append(f'{i.menu_item} จำนวน {i.quantity} ราคา {i.total_price}')
+#     return HttpResponse(f'<div>{list[0]}</div> <div>{list[1]}</div> ')
