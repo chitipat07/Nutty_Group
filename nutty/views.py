@@ -192,11 +192,11 @@ def confirm(req):
             line_notify_token = 'jZQ0iFamFl0VQdMR183IU4bQ4gI9gyzeyq2bO5grNf3'
             line_notify_api = 'https://notify-api.line.me/api/notify'
             headers = {'Authorization': f'Bearer {line_notify_token}'}
-            message = f'Your order has been confirmed!\n\nUser: {req.user}\nBasket: {basket}\nMenu Item: {order.menu_item}\nTotal Price: {order.total_price}\nQuantity: {order.quantity}\nTable Number: {order.table_number}\nNote: {order.note}'
+            message = f'มีออเดอร์ใหม่ครับพรี๊!\n\nชื่อลูกค้า: {req.user}\n เมนู: {order.menu_item}\nราคารวม: {order.total_price} บาท-.\nจำนวน: {order.quantity} จาน/กล่อง\nโต๊ะที่: {order.table_number}\nหมายเหตุ: {order.note}'
             payload = {'message': message}
             requests.post(line_notify_api, headers=headers, data=payload)
 
-        return redirect('read_for_user')
+        return redirect('success_page')
 
 
 
@@ -207,3 +207,5 @@ def Delete_item(req,id):
     return redirect('read_Basket')
 
 
+def success_page(req):
+    return render(req,'nutty/success.html')

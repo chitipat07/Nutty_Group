@@ -17,6 +17,8 @@ urlpatterns = [
     path('register_user/',register_user,name='register_user'),
     path('logins_user/',logins_user,name='logins_user'),
     path('logout_view/',logout_view,name='logout_view'),
+    path('success_page/',success_page,name='success_page'),
+
     # path('show_order_summary/',show_order_summary,name='show_order_summary'),
 
 
