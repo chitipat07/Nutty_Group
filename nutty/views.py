@@ -145,6 +145,24 @@ def nega(req, id):
     return redirect('read_Basket')
 
 
+# from django.http import HttpResponse
+
+# def show_order_summary(request):
+#     basket = Basket.objects.filter(user=request.user).first()
+    
+#     if basket is None:
+#         return HttpResponse('No basket found')
+
+#     orders = Order.objects.filter(basket=basket)
+#     if orders:
+#         order_info = ''
+#         for item in orders:
+#             order_info += f'<div>{item.menu_item} จำนวน {item.quantity} ราคา {item.total_price}</div>'
+#         return HttpResponse(order_info)
+#     else:
+#         return HttpResponse('No orders found')
+
+
 
 def confirm(req):
     if req.method == 'POST':
@@ -188,11 +206,4 @@ def Delete_item(req,id):
     data.delete()
     return redirect('read_Basket')
 
-# from django.http import HttpResponse
 
-# def show_order(request):
-#     order = Order.objects.filter(user=6)
-#     list = []
-#     for i in order:
-#         list.append(f'{i.menu_item} จำนวน {i.quantity} ราคา {i.total_price}')
-#     return HttpResponse(f'<div>{list[0]}</div> <div>{list[1]}</div> ')
